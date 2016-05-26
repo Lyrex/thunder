@@ -11,8 +11,11 @@ namespace utils
 namespace concurrent
 {
 	template<class T>
-	class queue
+	class Queue
 	{
+		std::queue<T> m_queue;
+		std::mutex m_mutex;
+	
 	public:
 		T& pop()
 		{
@@ -38,10 +41,6 @@ namespace concurrent
 			std::lock_guard<std::mutex> lock( m_mutex );
 			return m_queue.empty();
 		}
-
-	private:
-		std::queue<T> m_queue;
-		std::mutex m_mutex;
 	};
 };
 };

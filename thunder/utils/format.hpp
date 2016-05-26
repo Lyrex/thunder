@@ -1,17 +1,13 @@
-#ifndef PUTILS_FORMAT_HPP__
-#define PUTILS_FORMAT_HPP__
+#ifndef thunder_utils_format_hpp__
+#define thunder_utils_format_hpp__
 
-#include <string>
 #include <ostream>
 #include <memory>
-#include <exception>
-#include <utility>
 
-#include <boost/static_assert.hpp>
 #include <boost/type_traits.hpp>
 #include <boost/format.hpp>
 
-namespace padmak
+namespace thunder
 {
 namespace utils
 {
@@ -41,7 +37,7 @@ namespace format
 				format( ts ... );
 		}
 
-		void finalize()
+		void finalize() const
 		{
 			m_os << boost::str( m_format ) << std::flush;
 		}
@@ -50,8 +46,8 @@ namespace format
 		boost::format m_format;
 	};
 	/*
-		* provides an easy-to-use wrapper to format data directly to an ostream
-		*/
+	* provides an easy-to-use wrapper to format data directly to an ostream
+	*/
 	template<class ostream, class ... T>
 	static void static_format( ostream& ostr, const std::string& format, T&& ... args )
 	{
@@ -62,9 +58,9 @@ namespace format
 	}
 
 	/*
-		* provides an easy-to-use wrapper to format data to a string which
-		* will be returned
-		*/
+	* provides an easy-to-use wrapper to format data to a string which
+	* will be returned
+	*/
 	template<class... T>
 	static std::string static_format_string( const std::string& format, T&& ... args )
 	{
@@ -103,4 +99,4 @@ int main(int argc, const char * argv[])
 }
 */
 
-#endif // PUTILS_FORMAT_HPP__
+#endif // thunder_utils_format_hpp__
