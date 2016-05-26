@@ -1,0 +1,7 @@
+*         text=auto
+
+*.cpp     diff=cpp
+*.hpp     diff=cpp
+
+*.sln     merge=binary
+*.vcxproj merge=binary
