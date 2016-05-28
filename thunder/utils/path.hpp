@@ -48,7 +48,7 @@ namespace path
 #elif defined(__linux__) || defined(__CYGWIN__)
 		constexpr auto pathlen = PATH_MAX;
 #endif
-		std::string working_directory = "";
+		std::string working_directory = { "" };
 		char buffer[ pathlen ] = { 0 };
 				
 #if defined(_WIN32)

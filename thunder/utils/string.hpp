@@ -33,7 +33,7 @@ namespace string
 				result.push_back(s_.substr(start_found + start_marker.length(), end_found - start_found - (end_marker.length())));
 
 			start_found = s_.find(start_marker, end_found + 1);
-			end_found = s_.find(end_marker, start_found + 1);
+			end_found   = s_.find(end_marker, start_found + 1);
 		}
 
 		return std::move(result);
