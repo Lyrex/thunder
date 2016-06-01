@@ -47,7 +47,7 @@ namespace string
 			return std::move(std::vector<std::string>{ s });
 
 		auto start = s.begin();
-		auto end = search(start, s.end(), delimiter.begin(), delimiter.end());;
+		auto end = search(start, s.end(), delimiter.begin(), delimiter.end());
 				
 		while (end != s.end())
 		{

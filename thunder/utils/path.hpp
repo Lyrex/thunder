@@ -4,14 +4,14 @@
 #include <iostream>
 
 #if defined(_WIN32)
-#include <direct.h>
-#include <windows.h>
+	#include <direct.h>
+	#include <windows.h>
 #elif defined(__linux__) || defined(__CYGWIN__)
-#include <limits.h>
-#include <unistd.h>
-#define HINSTANCE unsigned int
+	#include <limits.h>
+	#include <unistd.h>
+	#define HINSTANCE unsigned int
 #else
-#error This OS is currently not supported
+	#error This OS is currently not supported
 #endif
 
 namespace thunder
@@ -23,15 +23,16 @@ namespace path
 	inline std::string get_executable_path(HINSTANCE instance = nullptr)
 	{
 #if defined(_WIN32)
-		char buffer[ MAX_PATH ] = { 0 };
+		constexpr auto pathlen = MAX_PATH;
 #elif defined(__linux__) || defined(__CYGWIN__)
-		char buffer[ PATH_MAX ] = { 0 };
+		constexpr auto pathlen = PATH_MAX;
 #endif
+		char buffer[ pathlen ] = { 0 };
 
 #if defined(_WIN32)
-		if (::GetModuleFileNameA(instance, buffer, MAX_PATH) == 0)
+		if (::GetModuleFileNameA(instance, buffer, pathlen) == 0)
 #elif defined(__linux__) || defined(__CYGWIN__)
-		if (::readlink("/proc/self/exe", buffer, PATH_MAX) == -1)
+		if (::readlink("/proc/self/exe", buffer, pathlen) == -1)
 #endif
 			std::cerr << "error while getting executable path" << std::endl;
 
