@@ -44,10 +44,10 @@ namespace string
 		std::vector<std::string> result;
 
 		if (delimiter.empty())
-			return std::move(std::vector<std::string>{ s });
+			return std::vector<std::string>{ s };
 
 		auto start = s.begin();
-		auto end = search(start, s.end(), delimiter.begin(), delimiter.end());
+		auto end = std::search(start, s.end(), delimiter.begin(), delimiter.end());
 				
 		while (end != s.end())
 		{
@@ -57,7 +57,7 @@ namespace string
 			if (end != s.end())
 				start = end + delimiter.size();
 
-			end = search(start, s.end(), delimiter.begin(), delimiter.end());
+			end = std::search(start, s.end(), delimiter.begin(), delimiter.end());
 		}
 
 		return result;
