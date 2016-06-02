@@ -3,7 +3,7 @@
 
 #include "string.hpp"
 
-int main( int argc, char** argv )
+int main( int, char** )
 {
 	const std::string test_1{ "cddcddecce" };
 

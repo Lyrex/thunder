@@ -36,7 +36,7 @@ namespace string
 			end_found   = s_.find(end_marker, start_found + 1);
 		}
 
-		return std::move(result);
+		return result;
 	}
 
 	inline std::vector<std::string> split(const std::string& s, const std::string& delimiter, const bool compress)
@@ -60,10 +60,10 @@ namespace string
 			end = search(start, s.end(), delimiter.begin(), delimiter.end());
 		}
 
-		return std::move(result);
+		return result;
 	}
-};
-};
-};
+}
+}
+}
 
 #endif // thunder_utils_string_hpp__
