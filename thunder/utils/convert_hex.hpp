@@ -1,9 +1,11 @@
 #ifndef thunder_utils_convert_hex_hpp__
 #define thunder_utils_convert_hex_hpp__
 
+#include <cstdlib>
+#include <iomanip>
+#include <sstream>
 #include <string>
 #include <vector>
-#include <cstdlib>
 
 namespace thunder
 {
@@ -49,6 +51,15 @@ namespace convert
 			return std::move(temp);
 		}
 	};
+	
+	inline auto array_to_string(uint8_t* data, size_t len)
+	{
+		std::ostringstream ss;
+		ss << std::hex;
+		for (size_t i = 0; i < len; ++i)
+			ss << std::setw(2) << std::setfill('0') << (uint32_t)data[i];
+		return std::move(ss.str());
+	}
 };
 };
 };
