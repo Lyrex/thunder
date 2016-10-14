@@ -10,7 +10,7 @@ namespace utils
 {
 namespace string
 {
-	inline std::vector<std::string> between(const std::string& s_, std::string start_marker, std::string end_marker, bool ignore_case = false, bool compress = true)
+	inline auto between(const std::string& s_, std::string start_marker, std::string end_marker, bool ignore_case = false, bool compress = true)
 	{
 		std::vector<std::string> result;
 
@@ -30,7 +30,7 @@ namespace string
 		while ((start_found != std::string::npos) && (end_found != std::string::npos))
 		{
 			if (!compress || (end_found - start_found) > 1 )
-				result.push_back(s_.substr(start_found + start_marker.length(), end_found - start_found - (end_marker.length())));
+				result.emplace_back(s_.substr(start_found + start_marker.length(), end_found - start_found - (end_marker.length())));
 
 			start_found = s_.find(start_marker, end_found + 1);
 			end_found   = s_.find(end_marker, start_found + 1);
@@ -39,28 +39,39 @@ namespace string
 		return result;
 	}
 
-	inline std::vector<std::string> split(const std::string& s, const std::string& delimiter, const bool compress)
+	inline auto split(const std::string& s, const std::string& delimiter, const bool keepEmpty)
 	{
-		std::vector<std::string> result;
+        std::vector<std::string> result;
 
-		if (delimiter.empty())
-			return std::vector<std::string>{ s };
+        std::string::size_type pos = 0;
+        std::string::size_type lastPos = 0;
+        std::string::size_type length = s.length();
 
-		auto start = s.begin();
-		auto end = std::search(start, s.end(), delimiter.begin(), delimiter.end());
-				
-		while (end != s.end())
-		{
-			if (!compress || start != end)
-				result.push_back({ start, end });
+        if (s.empty())
+            return result;
 
-			if (end != s.end())
-				start = end + delimiter.size();
+        while (lastPos < length+1)
+        {
+            pos = s.find_first_of(delimiter, lastPos);
+            if (pos == std::string::npos)
+                pos = length;
 
-			end = std::search(start, s.end(), delimiter.begin(), delimiter.end());
-		}
+            if (keepEmpty || pos != lastPos)
+                result.emplace_back(s.data() + lastPos, pos - lastPos);
 
-		return result;
+            lastPos = ++pos;
+        }
+
+        return result;
+	}
+
+    inline auto remove_all(const std::string& s, const char delimiter)
+	{
+        std::string s_{ s };
+
+        s_.erase(std::remove(s_.begin(), s_.end(), delimiter), s_.end());
+
+        return std::move(s_);
 	}
 }
 }
