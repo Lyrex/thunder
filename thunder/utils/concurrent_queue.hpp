@@ -10,38 +10,38 @@ namespace utils
 {
 namespace concurrent
 {
-	template<class T>
-	class Queue
-	{
-		std::queue<T> m_queue;
-		std::mutex m_mutex;
-	
-	public:
-		T& pop()
-		{
-			std::lock_guard<std::mutex> lock( m_mutex );
-			if ( !m_queue.empty() )
-			{
-				auto element = m_queue.front();
-				m_queue.pop();
-				return std::move(element);
-			}
+    template<class T>
+    class Queue
+    {
+        std::queue<T> m_queue;
+        std::mutex m_mutex;
+    
+    public:
+        T& pop()
+        {
+            std::scoped_lock lock{ m_mutex };
+            if ( !m_queue.empty() )
+            {
+                auto element = m_queue.front();
+                m_queue.pop();
+                return std::move(element);
+            }
 
-			return nullptr;
-		}
+            return nullptr;
+        }
 
-		void push( const T& element )
-		{
-			std::lock_guard<std::mutex> lock( m_mutex );
-			m_queue.push( element );
-		}
+        void push( const T& element )
+        {
+            std::scoped_lock lock{ m_mutex };
+            m_queue.push( element );
+        }
 
-		bool empty()
-		{
-			std::lock_guard<std::mutex> lock( m_mutex );
-			return m_queue.empty();
-		}
-	};
+        bool empty()
+        {
+            std::scoped_lock lock{ m_mutex };
+            return m_queue.empty();
+        }
+    };
 };
 };
 };
