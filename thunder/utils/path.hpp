@@ -55,13 +55,15 @@ namespace path
                 
 #if defined(_WIN32)
         if ( ::_getcwd(buffer.data(), MAX_PATH) != nullptr )
-            working_directory = std::string( buffer.data() );
+			working_directory = std::string{ buffer.data() };
 #elif defined(__linux__) || defined(__CYGWIN__)
         if ( ::getcwd(buffer, PATH_MAX) != nullptr )
             working_directory = std::string(buffer);
 #endif
         else
             std::cerr << "could not get working directory" << std::endl;
+
+		working_directory += '/';
 
         return std::move(working_directory);
     }
