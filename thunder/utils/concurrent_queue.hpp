@@ -1,5 +1,5 @@
-#ifndef thunder_utils_concurrent_queue_hpp__
-#define thunder_utils_concurrent_queue_hpp__
+#ifndef THUNDER_UTILS_CONCURRENT_QUEUE_HPP_
+#define THUNDER_UTILS_CONCURRENT_QUEUE_HPP_
 
 #include <queue>
 #include <mutex>
@@ -13,18 +13,16 @@ namespace concurrent
     template<class T>
     class Queue
     {
-        std::queue<T> m_queue;
-        std::mutex m_mutex;
+        std::queue<T> queue_;
+        std::mutex mutex_;
     
     public:
-        T& pop()
+        T pop()
         {
-            std::scoped_lock lock{ m_mutex };
-            if ( !m_queue.empty() )
+            std::lock_guard<std::mutex> lock{ mutex_ };
+            if ( !queue_.empty() )
             {
-                auto element = m_queue.front();
-                m_queue.pop();
-                return std::move(element);
+				return std::forward<T>(queue_.pop());
             }
 
             return nullptr;
@@ -32,18 +30,18 @@ namespace concurrent
 
         void push( const T& element )
         {
-            std::scoped_lock lock{ m_mutex };
-            m_queue.push( element );
+            std::lock_guard<std::mutex> lock{ mutex_ };
+            queue_.push( element );
         }
 
         bool empty()
         {
-            std::scoped_lock lock{ m_mutex };
-            return m_queue.empty();
+            std::lock_guard<std::mutex> lock{ mutex_ };
+            return queue_.empty();
         }
     };
 };
 };
 };
 
-#endif // thunder_utils_concurrent_queue_hpp__
+#endif // THUNDER_UTILS_CONCURRENT_QUEUE_HPP_
