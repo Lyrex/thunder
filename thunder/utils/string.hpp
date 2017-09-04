@@ -122,21 +122,6 @@ namespace string
 		return result;
 	}
 
-	/// @brief Removes all occurences of <tt>character</tt> in a string
-	///
-	/// @param s input string that gets searched
-	/// @param character character that gets removed from the string
-	///
-	/// @returns The string without all <tt>character</tt> occurences.
-	static inline auto remove_all(const String_type& s, const char character)
-	{
-		std::string result{ s };
-
-		result.erase(std::remove(result.begin(), result.end(), character), result.end());
-
-		return result;
-	}
-
 	/// @brief Removes all occurences of <tt>character</tt> in a string in place. <b>Attention: The input is modified.</b>
 	///
 	/// @param s input string that gets modified
@@ -145,6 +130,35 @@ namespace string
 	{
 		s.erase(std::remove(s.begin(), s.end(), character), s.end());
 	}
+
+	/// @brief Removes all occurences of <tt>character</tt> in a string
+	///
+	/// @param s input string that gets searched
+	/// @param character character that gets removed from the string
+	///
+	/// @returns The string without all <tt>character</tt> occurences.
+	static inline auto remove_all(std::string copy, const char character)
+	{
+		remove_all_inplace(copy, character);
+
+		return copy;
+	}
+
+#if _HAS_CXX17 && __has_include(<string_view>)
+	/// @brief Removes all occurences of <tt>character</tt> in a string
+	///
+	/// @param sv input string view that gets searched
+	/// @param character character that gets removed from the string
+	///
+	/// @returns The string without all <tt>character</tt> occurences.
+	static inline auto remove_all(const std::string_view& sv, const char character)
+	{
+		std::string result{ sv };
+		remove_all_inplace(result, character);
+
+		return result;
+	}
+#endif
 }
 }
 }
