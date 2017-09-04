@@ -13,28 +13,13 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\string">
-      <UniqueIdentifier>{d8e83f72-8013-40a6-88a8-0b042ebf98c9}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="string.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="concurrent_queue.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="convert_hex.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="format.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="path.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="string\trim.hpp">
-      <Filter>Header Files\string</Filter>
-    </ClInclude>
+    <ClCompile Include="filter_accounts.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
