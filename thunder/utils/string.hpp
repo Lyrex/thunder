@@ -1,3 +1,11 @@
+///
+/// @file string.hpp
+/// @brief Contains ulility functions for string operations
+///
+/// @author Lyrex <admin@lyrex.net>
+/// @version 1.0 2017/09/04
+///
+
 #ifndef thunder_utils_string_hpp__
 #define thunder_utils_string_hpp__
 
@@ -12,10 +20,13 @@
 
 #include "string/trim.hpp"
 
+/// @namespace thunder
 namespace thunder
 {
+/// @namespace utils
 namespace utils
 {
+/// @namespace string
 namespace string
 {
 #if _HAS_CXX17 && __has_include(<string_view>)
@@ -24,6 +35,15 @@ namespace string
 	using String_type = std::string;
 #endif
 
+	/// @brief Finds strings that lie between <tt>start_marker</tt> and <tt>end_marker</tt>
+	///
+	/// @param s input string that gets searched
+	/// @param start_marker string that defines the start marker of the search
+	/// @param start_marker string that defines the end marker of the search
+	/// @param ignore_case set to true if the start and end marker case should be ignored (default: false)
+	/// @param keep_empty set to true if empty results should still be keeped and returned in the result vector (default: false)
+	///
+	/// @returns A vector containing <tt>String_type</tt> with all found results. The vector is empty if there are no results.
 	static inline auto between(const String_type& s, std::string start_marker, std::string end_marker, const bool ignore_case = false, const bool keep_empty = false)
 	{
 		std::vector<String_type> result;
@@ -56,7 +76,12 @@ namespace string
 		return result;
 	}
 
-
+	/// @brief Splits a string by a delimiter.
+	///
+	/// @param s input string that gets splitted
+	/// @param delimiter string that defines the delmited by which the string gets splitted
+	///
+	/// @returns A vector containing <tt>String_type</tt> with all found results. The vector is empty if there are no results.
 	static inline auto split(const String_type& s, const char* delimiter)
 	{
 		std::vector<String_type> result;
@@ -97,11 +122,17 @@ namespace string
 		return result;
 	}
 
-	static inline auto remove_all(const String_type& s, const char delimiter)
+	/// @brief Removes all occurences of <tt>character</tt> in a string
+	///
+	/// @param s input string that gets searched
+	/// @param character character that gets removed from the string
+	///
+	/// @returns The string without all <tt>character</tt> occurences.
+	static inline auto remove_all(const String_type& s, const char character)
 	{
 		std::string result{ s };
 
-		result.erase(std::remove(result.begin(), result.end(), delimiter), result.end());
+		result.erase(std::remove(result.begin(), result.end(), character), result.end());
 
 		return result;
 	}
