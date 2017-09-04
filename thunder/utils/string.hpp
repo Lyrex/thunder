@@ -136,6 +136,15 @@ namespace string
 
 		return result;
 	}
+
+	/// @brief Removes all occurences of <tt>character</tt> in a string in place. <b>Attention: The input is modified.</b>
+	///
+	/// @param s input string that gets modified
+	/// @param character character that gets removed from the string
+	static inline void remove_all_inplace(std::string& s, const char character)
+	{
+		s.erase(std::remove(s.begin(), s.end(), character), s.end());
+	}
 }
 }
 }
