@@ -2,9 +2,9 @@
 #define thunder_utils_path_hpp__
 
 #include <array>
-#include <iostream>
+#include <stdexcept>
 
-#if defined(_WIN32)
+#if defined(WIN32) || defined(_WIN32) 
     #include <direct.h>
     #include <windows.h>
 #elif defined(__linux__) || defined(__CYGWIN__)
@@ -21,51 +21,58 @@ namespace utils
 {
 namespace path
 {
-    inline std::string get_executable_path(HINSTANCE instance = nullptr)
+	constexpr char path_separator() noexcept
+	{
+#if defined(WIN32) || defined(_WIN32) 
+		return '\\';
+#else
+		return '/';
+#endif
+	}
+
+    inline auto get_executable_path(HINSTANCE instance = nullptr)
     {
-#if defined(_WIN32)
+#if defined(WIN32) || defined(_WIN32) 
         constexpr auto pathlen = MAX_PATH;
 #elif defined(__linux__) || defined(__CYGWIN__)
         constexpr auto pathlen = PATH_MAX;
 #endif
         std::array<char, pathlen> buffer = { 0 };
 
-#if defined(_WIN32)
+#if defined(WIN32) || defined(_WIN32) 
         if (::GetModuleFileNameA(instance, buffer.data(), pathlen) == 0)
 #elif defined(__linux__) || defined(__CYGWIN__)
         if (::readlink("/proc/self/exe", buffer, pathlen) == -1)
 #endif
-            std::cerr << "error while getting executable path" << std::endl;
+            throw std::runtime_error("error while getting executable path");
 
-        auto executable_path = std::string(buffer.data());
-        auto executable_directory = executable_path.substr(0, executable_path.find_last_of("\\"));
+        const std::string executable_path{ buffer.data() };
+        const std::string executable_directory{ executable_path.substr(0, executable_path.find_last_of(path_separator())) };
 
-        return std::move(executable_directory);
+        return executable_directory + path_separator();
     }
 
-    inline std::string get_working_directory()
+    inline auto get_working_directory()
     {
-#if defined(_WIN32)
+#if defined(WIN32) || defined(_WIN32) 
         constexpr auto pathlen = MAX_PATH;
 #elif defined(__linux__) || defined(__CYGWIN__)
         constexpr auto pathlen = PATH_MAX;
 #endif
-        std::string working_directory{ };
+        std::string working_directory;
         std::array<char, pathlen> buffer = { 0 };
                 
-#if defined(_WIN32)
+#if defined(WIN32) || defined(_WIN32) 
         if ( ::_getcwd(buffer.data(), MAX_PATH) != nullptr )
 			working_directory = std::string{ buffer.data() };
 #elif defined(__linux__) || defined(__CYGWIN__)
         if ( ::getcwd(buffer, PATH_MAX) != nullptr )
-            working_directory = std::string(buffer);
+            working_directory = std::string{ buffer.data() };
 #endif
         else
-            std::cerr << "could not get working directory" << std::endl;
+            throw std::runtime_error("could not get working directory");
 
-		working_directory += '/';
-
-        return std::move(working_directory);
+        return working_directory + path_separator();
     }
 };
 };
