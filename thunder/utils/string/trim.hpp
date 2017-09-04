@@ -1,6 +1,6 @@
 ///
 /// @file trim.hpp
-/// @brief Purpose: Ulility functions to remove whitespace from a string 
+/// @brief Contains ulility functions to remove whitespace from a string 
 ///
 /// @author Lyrex <admin@lyrex.net>
 /// @version 1.0 2017/09/04
@@ -27,63 +27,54 @@ namespace utils
 /// @namespace string
 namespace string
 {	
-	/// @fn ltrim_inplace
 	/// @brief Removes whitespace at the start of a string in place.
-	/// 
-    /// @param s Reference to the input string. Attention: The input is modified.
+	///
+    /// @param s reference to the input string. <b>Attention: The input is modified.</b>
 	static inline void ltrim_inplace(std::string& s) {
-        s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) {
-            return !std::isspace(ch);
+        s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](char ch) {
+            return !std::isspace(static_cast<unsigned char>(ch));
         }));
     }
 
-	/// @fn rtrim_inplace
 	/// @brief Removes whitespace at the end of a string in place.
 	/// 
-	/// @param s Reference to the input string. Attention: The input is modified.
+	/// @param s reference to the input string. <b>Attention: The input is modified.</b>
     static inline void rtrim_inplace(std::string& s) {
-        s.erase(std::find_if(s.rbegin(), s.rend(), [](unsigned char ch) {
-            return !std::isspace(ch);
+        s.erase(std::find_if(s.rbegin(), s.rend(), [](char ch) {
+            return !std::isspace(static_cast<unsigned char>(ch));
         }).base(), s.end());
     }
 
-	/// @fn trim_inplace
 	/// @brief Removes whitespace both at the start and at the end of a string in place.
 	/// 
-	/// @param s Reference to the input string. Attention: The input is modified.
-    static inline void trim_inplace(std::string &s) {
+	/// @param s reference to the input string. <b>Attention: The input is modified.</b>
+    static inline void trim_inplace(std::string& s) {
         ltrim_inplace(s);
         rtrim_inplace(s);
     }
 
-	/// @fn ltrim
-	/// @brief Removes whitespace at the start of a string.
+	/// @brief Removes whitespace at the start of a string.\n
 	/// 
-	/// @param copy Input string
-	///
-	/// @return The trimmed string
+	/// @param copy input string
+	/// @returns The left-side trimmed string
     static inline std::string ltrim(std::string copy) {    	
     	ltrim_inplace(copy);
         return copy;
     }
 
-	/// @fn rtrim
 	/// @brief Removes whitespace at the end of a string.
 	/// 
-	/// @param copy Input string
-	///
-	/// @return The trimmed string
+	/// @param copy input string
+	/// @returns The right-side trimmed string
     static inline std::string rtrim(std::string copy) {    	
     	rtrim_inplace(copy);
         return copy;
     }
 
-	/// @fn trim
-	/// @brief Removes whitespace both at the start and at the end of a string.
-	/// 
-	/// @param copy Input string
+	/// @brief Removes whitespace both at the start and at the end of a string. 
 	///
-	/// @return The trimmed string
+	/// @param copy input string
+	/// @returns The trimmed string
     static inline std::string trim(std::string copy) {
         trim_inplace(copy);
         return copy;
