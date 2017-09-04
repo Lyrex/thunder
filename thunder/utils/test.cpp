@@ -9,6 +9,7 @@
 #include <string>
 #endif
 
+#include <thunder/utils/path.hpp>
 #include <thunder/utils/string.hpp>
 
 int main( int, char** )
@@ -74,6 +75,9 @@ int main( int, char** )
 	end_time = std::chrono::high_resolution_clock::now();
 	std::cout << "thunder::utils::string::rtrim took " << std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count() << "ms" << std::endl;
 
+
+	std::cout << "thunder::utils::path::get_executable_path(): " << thunder::utils::path::get_executable_path() << "\n";
+	std::cout << "thunder::utils::path::get_working_directory(): " << thunder::utils::path::get_working_directory() << "\n";
 
     std::cin.get();
 
