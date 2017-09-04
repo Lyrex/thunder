@@ -1,14 +1,16 @@
 #ifndef thunder_utils_string_hpp__
 #define thunder_utils_string_hpp__
 
-#include <vector>
 #include <algorithm>
+#include <vector>
 
-#if _HAS_CXX17
+#if _HAS_CXX17 && __has_include(<string_view>)
 #include <string_view>
 #else
 #include <string>
 #endif
+
+#include "string/trim.hpp"
 
 namespace thunder
 {
@@ -16,13 +18,13 @@ namespace utils
 {
 namespace string
 {
-#if _HAS_CXX17
+#if _HAS_CXX17 && __has_include(<string_view>)
 	using String_type = std::string_view;
 #else
 	using String_type = std::string;
 #endif
 
-	inline auto between(const String_type& s, std::string start_marker, std::string end_marker, const bool ignore_case = false, const bool keep_empty = false)
+	static inline auto between(const String_type& s, std::string start_marker, std::string end_marker, const bool ignore_case = false, const bool keep_empty = false)
 	{
 		std::vector<String_type> result;
 
@@ -55,7 +57,7 @@ namespace string
 	}
 
 
-	inline auto split(const String_type& s, const char* delimiter)
+	static inline auto split(const String_type& s, const char* delimiter)
 	{
 		std::vector<String_type> result;
 
@@ -95,7 +97,7 @@ namespace string
 		return result;
 	}
 
-	inline auto remove_all(const String_type& s, const char delimiter)
+	static inline auto remove_all(const String_type& s, const char delimiter)
 	{
 		std::string result{ s };
 
