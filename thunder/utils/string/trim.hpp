@@ -12,11 +12,7 @@
 #include <algorithm> 
 #include <cctype>
 
-#if _HAS_CXX17 && __has_include(<string_view>)
-#include <string_view>
-#else
 #include <string>
-#endif
 
 /// @namespace thunder
 namespace thunder
