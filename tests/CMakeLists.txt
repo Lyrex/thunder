@@ -1,31 +1,41 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.7)
 project(THUNDER_TESTS)
 
-if(MSVC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
-endif(MSVC)
+if (WIN32)
+    include_directories($ENV{DEV_PATH}/include)
+else ()
+    find_package(fmt REQUIRED)
+    set(FMT_LINK_COMMAND fmt::fmt-header-only)
+endif ()
 
-include_directories($ENV{DEV_PATH}/include)
+find_program(
+        CLANG_TIDY_EXE
+        NAMES
+        clang-tidy
+        clang-tidy-5.0
+        clang-tidy-4.0
+        clang-tidy-3.9
+        clang-tidy-3.8
+        clang-tidy-3.7
+        clang-tidy-3.6
+        clang-tidy-3.5
+        DOC "Path to clang-tidy executable"
+)
 
-set(CLANG_TIDY_EXE "C:/Program Files (x86)/LLVM/bin/clang-tidy.exe")
-
-if(NOT CLANG_TIDY_EXE)
+if (NOT CLANG_TIDY_EXE)
     message(STATUS "clang-tidy not found.")
-else()
+else ()
     message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
-    set(DO_CLANG_TIDY "${CLANG_TIDY_EXE}" "-checks=*,-clang-analyzer-alpha.*")
-endif()
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+    set(DO_CLANG_TIDY "${CLANG_TIDY_EXE}" "-header-filter='.*' -checks='*,-clang-analyzer-alpha.*'")
+endif ()
 
 add_executable(filter_accounts filter_accounts.cpp)
 add_executable(test_benchmark test_benchmark.cpp)
 
-target_link_libraries(filter_accounts thunder)
-target_link_libraries(test_benchmark thunder)
+target_link_libraries(filter_accounts PRIVATE thunder ${FMT_LINK_COMMAND})
+target_link_libraries(test_benchmark PRIVATE thunder ${FMT_LINK_COMMAND})
 
-if(CLANG_TIDY_EXE)
+if (CLANG_TIDY_EXE)
     set_target_properties(
             filter_accounts PROPERTIES
             CXX_CLANG_TIDY "${DO_CLANG_TIDY}"
@@ -35,4 +45,4 @@ if(CLANG_TIDY_EXE)
             test_benchmark PROPERTIES
             CXX_CLANG_TIDY "${DO_CLANG_TIDY}"
     )
-endif()
+endif ()
