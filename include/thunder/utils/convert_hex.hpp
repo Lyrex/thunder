@@ -70,8 +70,8 @@ namespace convert
             ss << std::setw(2) << std::setfill('0') << static_cast<uint32_t>(data[i]);
         return std::move(ss.str());
     }
-};
-};
-};
+}; // namespace convert
+}; // namespace utils
+}; // namespace thunder
 
 #endif // thunder_utils_convert_hex_hpp__

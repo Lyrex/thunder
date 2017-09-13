@@ -1,13 +1,13 @@
 #include <chrono>
 #include <iostream>
 
-#include <vector>
-
 #if _HAS_CXX17 && __has_include(<string_view>)
 #include <string_view>
 #else
 #include <string>
 #endif
+
+#include <vector>
 
 #include <thunder/utils/path.hpp>
 #include <thunder/utils/string.hpp>
@@ -54,7 +54,7 @@ int main( int /*argc*/, char** /*argv*/)
 	// benchmark thunder::utils::string::replace_all_inplace
 	start_time = std::chrono::high_resolution_clock::now();
 	for (auto i = 0; i < 500000; i++)
-        thunder::utils::string::remove_all_inplace(test_3, '(');
+        thunder::utils::string::remove_all_inplace(&test_3, '(');
 
     end_time = std::chrono::high_resolution_clock::now();
 	std::cout << "thunder::utils::string::remove_all_inplace took " << std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count() << "ms" << std::endl;

@@ -71,9 +71,9 @@ namespace format
 		sf.finalize();
 		return oss.str();
 	}
-};
-};
-};
+}; // namespace format
+}; // namespace utils
+}; // namespace thunder
 /*
  * Example-code
  */

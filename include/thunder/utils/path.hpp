@@ -8,7 +8,7 @@
     #include <direct.h>
     #include <windows.h>
 #elif defined(__linux__) || defined(__CYGWIN__)
-    #include <limits.h>
+    #include <climits>
     #include <unistd.h>
     #define HINSTANCE void*
 #else
@@ -74,8 +74,8 @@ namespace path
 
         return working_directory + path_separator();
     }
-};
-};
-};
+}; // namespace path
+}; // namespace utils
+}; // namespace thunder
 
 #endif // thunder_utils_path_hpp__

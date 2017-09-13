@@ -128,9 +128,9 @@ namespace string
 	///
 	/// @param s input string that gets modified
 	/// @param character character that gets removed from the string
-	static inline void remove_all_inplace(std::string& s, const char character)
+	static inline void remove_all_inplace(std::string* s, const char character)
 	{
-		s.erase(std::remove(s.begin(), s.end(), character), s.end());
+		s->erase(std::remove(s->begin(), s->end(), character), s->end());
 	}
 
 	/// @brief Removes all occurences of <tt>character</tt> in a string
@@ -141,7 +141,7 @@ namespace string
 	/// @returns The string without all <tt>character</tt> occurences.
 	static inline auto remove_all(std::string copy, const char character)
 	{
-		remove_all_inplace(copy, character);
+		remove_all_inplace(&copy, character);
 
 		return copy;
 	}
@@ -161,8 +161,8 @@ namespace string
 		return result;
 	}
 #endif
-}
-}
-}
+}; // namespace string
+}; // namespace utils
+}; // namespace thunder
 
 #endif // thunder_utils_string_hpp__

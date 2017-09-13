@@ -42,8 +42,8 @@ XorStr<__XORSTR_START, __XORSTR__BUFLEN, __XORSTR__XREFKILLER>::XorStr(const cha
 	s[__XORSTR__BUFLEN - 1] = 0;
 }
 
-};
-};
-};
+}; // namespace xorstr
+}; // namespace utils
+}; // namespace thunder
 
 #endif // thunder_utils_xorstr_hpp__

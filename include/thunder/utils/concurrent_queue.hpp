@@ -8,7 +8,7 @@ namespace thunder
 {
 namespace utils
 {
-namespace concurrent
+namespace concurrency
 {
     template<class T>
     class Queue
@@ -40,8 +40,8 @@ namespace concurrent
             return queue_.empty();
         }
     };
-};
-};
-};
+}; // namespace concurrency
+}; // namespace utils
+}; // namespace thunder
 
 #endif // THUNDER_UTILS_CONCURRENT_QUEUE_HPP_
