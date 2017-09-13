@@ -167,6 +167,7 @@
     <ClInclude Include="path.hpp" />
     <ClInclude Include="string.hpp" />
     <ClInclude Include="string\trim.hpp" />
+    <ClInclude Include="xorstr.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
