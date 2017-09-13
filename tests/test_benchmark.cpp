@@ -12,7 +12,7 @@
 #include <thunder/utils/path.hpp>
 #include <thunder/utils/string.hpp>
 
-int main( int, char** )
+int main( int /*argc*/, char** /*argv*/)
 {
 #if _HAS_CXX17 && __has_include(<string_view>)
     std::vector<std::string_view> result;
@@ -29,7 +29,7 @@ int main( int, char** )
 	// benchmark thunder::utils::string::between
     auto start_time = std::chrono::high_resolution_clock::now();
     for (auto i = 0; i < 50000; i++)
-		result = thunder::utils::string::between(test_1, "\"", "\"", true, true);
+        result = thunder::utils::string::between(test_1, "\"", "\"", true, true);
 
     auto end_time = std::chrono::high_resolution_clock::now();
     std::cout << "thunder::utils::string::between took " << std::chrono::duration_cast<std::chrono::milliseconds>( end_time - start_time ).count() << "ms" << std::endl;
@@ -37,32 +37,32 @@ int main( int, char** )
 	// benchmark thunder::utils::string::remove_all
 	start_time = std::chrono::high_resolution_clock::now();
 	for (auto i = 0; i < 500000; i++)
-		thunder::utils::string::remove_all(test_1, '(');
+        thunder::utils::string::remove_all(test_1, '(');
 
-	end_time = std::chrono::high_resolution_clock::now();
+    end_time = std::chrono::high_resolution_clock::now();
 	std::cout << "thunder::utils::string::remove_all with std::string_view took " << std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count() << "ms" << std::endl;
 
 	// benchmark thunder::utils::string::remove_all
 	start_time = std::chrono::high_resolution_clock::now();
 	for (auto i = 0; i < 500000; i++)
-		thunder::utils::string::remove_all(test_3, '(');
+        thunder::utils::string::remove_all(test_3, '(');
 
-	end_time = std::chrono::high_resolution_clock::now();
+    end_time = std::chrono::high_resolution_clock::now();
 	std::cout << "thunder::utils::string::remove_all with std::string took " << std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count() << "ms" << std::endl;
 
 
 	// benchmark thunder::utils::string::replace_all_inplace
 	start_time = std::chrono::high_resolution_clock::now();
 	for (auto i = 0; i < 500000; i++)
-		thunder::utils::string::remove_all_inplace(test_3, '(');
+        thunder::utils::string::remove_all_inplace(test_3, '(');
 
-	end_time = std::chrono::high_resolution_clock::now();
+    end_time = std::chrono::high_resolution_clock::now();
 	std::cout << "thunder::utils::string::remove_all_inplace took " << std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count() << "ms" << std::endl;
 
-	// benchmark thunder::utils::string::split 
+	// benchmark thunder::utils::string::split
     start_time = std::chrono::high_resolution_clock::now();
     for (auto i = 0; i < 500000; i++)
-		result = thunder::utils::string::split(test_2, "|");
+        result = thunder::utils::string::split(test_2, "|");
 
     end_time = std::chrono::high_resolution_clock::now();
     std::cout << "thunder::utils::string::split took " << std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count() << "ms" << std::endl;
@@ -70,9 +70,9 @@ int main( int, char** )
 	// benchmark thunder::utils::string::trim
 	start_time = std::chrono::high_resolution_clock::now();
 	for (auto i = 0; i < 50000; i++)
-		result.push_back(thunder::utils::string::trim(std::string(test_1)));
+        result.push_back(thunder::utils::string::trim(std::string(test_1)));
 
-	end_time = std::chrono::high_resolution_clock::now();
+    end_time = std::chrono::high_resolution_clock::now();
 	std::cout << "thunder::utils::string::rtrim took " << std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count() << "ms" << std::endl;
 
 

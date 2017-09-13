@@ -9,14 +9,18 @@
 #include <string>
 #endif
 
+#if defined(WIN32) && !defined(FMT_HEADER_ONLY)
+#define FMT_HEADER_ONLY
+#endif
+
 #include <fmt/format.h>
 
 #include <thunder/utils/string.hpp>
 
-int main(int argc, char* argv[])
+int main(int /*argc*/, char** /*argv*/)
 {
-	std::ifstream account_sql{ "C:\\undergroundmt2_account.sql", std::ios::in | std::ios::binary };
-	std::ofstream filtered_account_sql{ "C:\\undergroundmt2_account_filtered.sql", std::ios::out | std::ios::binary };
+	std::ifstream account_sql{ R"(C:\undergroundmt2_account.sql)", std::ios::in | std::ios::binary };
+	std::ofstream filtered_account_sql{ R"(C:\undergroundmt2_account_filtered.sql)", std::ios::out | std::ios::binary };
 	if (!account_sql.is_open())
 		return 1;
 
@@ -35,9 +39,9 @@ int main(int argc, char* argv[])
 	for (auto&& line: lines)
 	{
 		auto query_data = thunder::utils::string::between(line, "INSERT INTO account VALUES (", ");");
-		if (query_data.size() < 1)
+		if (query_data.empty())
 			continue;
-		
+
 		auto split_data = thunder::utils::string::between(query_data[0], "'", "', ", false, false);
 		
 		if (split_data.size() < 6)
