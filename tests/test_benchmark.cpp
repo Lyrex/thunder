@@ -70,16 +70,22 @@ int main( int /*argc*/, char** /*argv*/)
 	// benchmark thunder::utils::string::trim
 	start_time = std::chrono::high_resolution_clock::now();
 	for (auto i = 0; i < 50000; i++)
-        result.push_back(thunder::utils::string::trim(std::string(test_1)));
+        result.push_back(thunder::utils::string::trim(test_3));
 
     end_time = std::chrono::high_resolution_clock::now();
-	std::cout << "thunder::utils::string::rtrim took " << std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count() << "ms" << std::endl;
+	std::cout << "thunder::utils::string::trim took " << std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count() << "ms" << std::endl;
+
+	// benchmark thunder::utils::string::trim_inplace
+	start_time = std::chrono::high_resolution_clock::now();
+	for (auto i = 0; i < 50000; i++)
+		thunder::utils::string::trim_inplace(&test_3);
+
+	end_time = std::chrono::high_resolution_clock::now();
+	std::cout << "thunder::utils::string::trim_inplace took " << std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count() << "ms" << std::endl;
 
 
 	std::cout << "thunder::utils::path::get_executable_path(): " << thunder::utils::path::get_executable_path() << "\n";
 	std::cout << "thunder::utils::path::get_working_directory(): " << thunder::utils::path::get_working_directory() << "\n";
-
-    std::cin.get();
 
     return 0;
 }
