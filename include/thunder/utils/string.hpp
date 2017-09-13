@@ -156,7 +156,7 @@ namespace string
 	static inline auto remove_all(const std::string_view& sv, const char character)
 	{
 		std::string result{ sv };
-		remove_all_inplace(result, character);
+		remove_all_inplace(&result, character);
 
 		return result;
 	}
