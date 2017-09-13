@@ -9,8 +9,6 @@
 #include <string>
 #endif
 
-#define FMT_HEADER_ONLY
-
 #include <fmt/format.h>
 
 #include <thunder/utils/string.hpp>

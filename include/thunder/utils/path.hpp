@@ -10,7 +10,7 @@
 #elif defined(__linux__) || defined(__CYGWIN__)
     #include <limits.h>
     #include <unistd.h>
-    #define HINSTANCE unsigned int
+    #define HINSTANCE void*
 #else
     #error This OS is currently not supported
 #endif
@@ -42,7 +42,7 @@ namespace path
 #if defined(WIN32) || defined(_WIN32) 
         if (::GetModuleFileNameA(instance, buffer.data(), pathlen) == 0)
 #elif defined(__linux__) || defined(__CYGWIN__)
-        if (::readlink("/proc/self/exe", buffer, pathlen) == -1)
+        if (::readlink("/proc/self/exe", buffer.data(), pathlen) == -1)
 #endif
             throw std::runtime_error("error while getting executable path");
 
@@ -66,7 +66,7 @@ namespace path
         if ( ::_getcwd(buffer.data(), MAX_PATH) != nullptr )
 			working_directory = std::string{ buffer.data() };
 #elif defined(__linux__) || defined(__CYGWIN__)
-        if ( ::getcwd(buffer, PATH_MAX) != nullptr )
+        if ( ::getcwd(buffer.data(), PATH_MAX) != nullptr )
             working_directory = std::string{ buffer.data() };
 #endif
         else
