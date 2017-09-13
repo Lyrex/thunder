@@ -214,3 +214,10 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+
+
+### Clion ###
+# CMake
+.idea
+cmake-build-debug/
+cmake-build-release/

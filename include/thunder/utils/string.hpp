@@ -6,6 +6,8 @@
 /// @version 1.0 2017/09/04
 ///
 
+#pragma once
+
 #ifndef thunder_utils_string_hpp__
 #define thunder_utils_string_hpp__
 

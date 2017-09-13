@@ -1,5 +1,3 @@
-/*
-
 #include <iostream>
 #include <chrono>
 #include <fstream>
@@ -17,7 +15,7 @@
 
 #include <thunder/utils/string.hpp>
 
-int not_main(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
 	std::ifstream account_sql{ "C:\\undergroundmt2_account.sql", std::ios::in | std::ios::binary };
 	std::ofstream filtered_account_sql{ "C:\\undergroundmt2_account_filtered.sql", std::ios::out | std::ios::binary };
@@ -50,7 +48,7 @@ int not_main(int argc, char* argv[])
 		w.write("INSERT INTO account (id, login, password, email) VALUES ('{}', '{}', '{}', '{}');\n", std::string(split_data[0]), std::string(split_data[1]), std::string(split_data[2]), std::string(split_data[5]));
 	}
 
-	filtered_account_sql << w.c_str();
+	filtered_account_sql << w.str();
 	filtered_account_sql.flush();
 
 	filtered_account_sql.close();
@@ -61,5 +59,3 @@ int not_main(int argc, char* argv[])
 	
 	return 0;
 }
-
-*/
