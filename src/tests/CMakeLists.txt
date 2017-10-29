@@ -5,7 +5,7 @@ if (WIN32)
     include_directories($ENV{DEV_PATH}/include)
 else ()
     find_package(fmt REQUIRED)
-    set(FMT_LINK_COMMAND fmt::fmt-header-only)
+    set(FMT_LINK_COMMAND fmt-header-only)
 endif ()
 
 add_executable(filter_accounts filter_accounts.cpp)
