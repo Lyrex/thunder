@@ -1,20 +1,12 @@
 cmake_minimum_required(VERSION 3.7)
-project(libthunder)
-
-include(GNUInstallDirs)
+project(libthunder VERSION 0.1 LANGUAGES CXX)
 
 add_library(thunder INTERFACE)
 		
-target_include_directories(thunder PUBLIC
+target_include_directories(thunder INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
 )
-		
-# target_include_directories(thunder INTERFACE  
-#     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/thunder>  
-#     $<INSTALL_INTERFACE:include/thunder>
-# )		
-# target_include_directories(thunder INTERFACE include/)
 
 target_compile_definitions(thunder INTERFACE LIBRARY_HEADER_ONLY)
 target_compile_features(thunder INTERFACE cxx_auto_type cxx_constexpr cxx_aggregate_default_initializers
@@ -31,6 +23,5 @@ install(EXPORT ThunderConfig
   NAMESPACE thunder::
   DESTINATION lib/cmake/thunder
 )
-
 
 export(TARGETS thunder FILE MyLibraryConfig.cmake)
