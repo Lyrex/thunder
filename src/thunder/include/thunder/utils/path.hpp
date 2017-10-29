@@ -7,7 +7,7 @@
 #if defined(WIN32) || defined(_WIN32) 
     #include <direct.h>
     #include <windows.h>
-#elif defined(__linux__) || defined(__CYGWIN__)
+#elif defined(__linux__) || defined(__CYGWIN__) || defined(__FreeBSD__)
     #include <climits>
     #include <unistd.h>
     #define HINSTANCE void*
@@ -34,14 +34,14 @@ namespace path
     {
 #if defined(WIN32) || defined(_WIN32) 
         constexpr auto pathlen = MAX_PATH;
-#elif defined(__linux__) || defined(__CYGWIN__)
+#elif defined(__linux__) || defined(__CYGWIN__) || defined(__FreeBSD__)
         constexpr auto pathlen = PATH_MAX;
 #endif
         std::array<char, pathlen> buffer = { 0 };
 
 #if defined(WIN32) || defined(_WIN32) 
         if (::GetModuleFileNameA(instance, buffer.data(), pathlen) == 0)
-#elif defined(__linux__) || defined(__CYGWIN__)
+#elif defined(__linux__) || defined(__CYGWIN__) || defined(__FreeBSD__)
         if (::readlink("/proc/self/exe", buffer.data(), pathlen) == -1)
 #endif
             throw std::runtime_error("error while getting executable path");
@@ -56,7 +56,7 @@ namespace path
     {
 #if defined(WIN32) || defined(_WIN32) 
         constexpr auto pathlen = MAX_PATH;
-#elif defined(__linux__) || defined(__CYGWIN__)
+#elif defined(__linux__) || defined(__CYGWIN__) || defined(__FreeBSD__)
         constexpr auto pathlen = PATH_MAX;
 #endif
         std::string working_directory;
@@ -65,7 +65,7 @@ namespace path
 #if defined(WIN32) || defined(_WIN32) 
         if ( ::_getcwd(buffer.data(), MAX_PATH) != nullptr )
 			working_directory = std::string{ buffer.data() };
-#elif defined(__linux__) || defined(__CYGWIN__)
+#elif defined(__linux__) || defined(__CYGWIN__) || defined(__FreeBSD__)
         if ( ::getcwd(buffer.data(), PATH_MAX) != nullptr )
             working_directory = std::string{ buffer.data() };
 #endif
