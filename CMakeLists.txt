@@ -8,4 +8,15 @@ target_compile_features(thunder INTERFACE cxx_auto_type cxx_constexpr cxx_aggreg
         cxx_generic_lambdas cxx_generalized_initializers cxx_nullptr)
 target_include_directories(thunder INTERFACE include/)
 
-add_subdirectory(tests)
+install(TARGETS thunder EXPORT thunderTargets
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
+  INCLUDES DESTINATION include
+)
+
+install(EXPORT thunderTargets
+  FILE thunderTargets.cmake
+  NAMESPACE thunder::
+  DESTINATION lib/cmake/thunder
+)
